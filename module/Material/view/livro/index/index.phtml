@@ -1,0 +1,104 @@
+<h1>
+	<?php echo $this->escapeHtml($this->title); ?> 
+	<span class="sub-info"> - <?php echo $this->escapeHtml($this->subtitle); ?></span>
+</h1>
+
+<?php
+echo $this->partial('_formMessages.phtml', array(
+    'success' => $this->success,
+    'error' => $this->error,
+    'info' => $this->info)
+);
+?>
+
+<table class="table table-bordered table-striped table-hover">
+	<colgroup>
+       <col>
+       <col style="width: 12em">
+       <col style="width: 8em">
+       <col style="width: 13em;">
+    </colgroup>
+	<tr>
+    	<td colspan="4">
+    		<a class="btn btn-success pull-right" href="<?php echo $this->url($this->route, array('action' => 'cadastrar')); ?>">
+    			<span class="glyphicon glyphicon-plus-sign"></span>&nbsp; Cadastrar novo&nbsp;
+    		</a>
+    	</td>
+	</tr>
+	<tr>
+		<th>Título</th>
+		<th>ISBN</th>
+		<th>Páginas</th>
+		<th>Ação</th>
+	</tr> 
+	<?php if ($this->data): ?>
+		<?php foreach ($this->data as $entity) : ?> 
+        	<tr>
+        		<td><?php echo $this->escapeHtml($entity->getTitulo()); ?></td>
+        		<td><?php echo $this->escapeHtml($entity->getIsbn()); ?></td>
+        		<td><?php echo $this->escapeHtml($entity->getPaginas()); ?></td>
+        		<td>
+        			<a class="btn btn-info" href="<?php echo $this->url($this->route, array('action' => 'editar', 'id' => $entity->getId())); ?>">
+        				<span class="glyphicon glyphicon-pencil"></span>&nbsp;Editar
+        			</a>
+        			<a class="btn btn-danger" href="<?php echo $this->url($this->route, array('action' => 'deletar', 'id' => $entity->getId())); ?>">
+        				<span class="glyphicon glyphicon-trash"></span>&nbsp;Deletar
+        			</a>
+        		</td>
+        	</tr> 
+		<?php endforeach; ?>
+	<?php else : ?>
+		<p>Nenhum registro encontrado</p>
+	<?php endif; ?> 
+</table>
+
+<?php if ($this->pageCount): ?>
+     <div>
+         <ul class="pagination">
+             <!-- Previous page link -->
+             <?php if (isset($this->previous)): ?>
+                 <li>
+                     <a href="<?php echo $this->url($this->route); ?>?page=<?php echo $this->previous; ?>">
+                         <<
+                     </a>
+                 </li>
+             <?php else: ?>
+                 <li class="disabled">
+                     <a href="#">
+                         <<
+                     </a>
+                 </li>
+             <?php endif; ?>
+
+             <!-- Numbered page links -->
+             <?php foreach ($this->pagesInRange as $page): ?>
+                 <?php if ($page != $this->current): ?>
+                     <li>
+                         <a href="<?php echo $this->url($this->route);?>?page=<?php echo $page; ?>">
+                             <?php echo $page; ?>
+                         </a>
+                     </li>
+                 <?php else: ?>
+                     <li class="active">
+                         <a href="#"><?php echo $page; ?></a>
+                     </li>
+                 <?php endif; ?>
+             <?php endforeach; ?>
+
+             <!-- Next page link -->
+             <?php if (isset($this->next)): ?>
+                 <li>
+                     <a href="<?php echo $this->url($this->route); ?>?page=<?php echo $this->next; ?>">
+                         >>
+                     </a>
+                 </li>
+             <?php else: ?>
+                 <li class="disabled">
+                     <a href="#">
+                         >>
+                     </a>
+                 </li>
+             <?php endif; ?>
+         </ul>
+     </div>
+ <?php endif; ?>

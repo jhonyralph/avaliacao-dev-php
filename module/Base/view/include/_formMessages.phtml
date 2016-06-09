@@ -1,0 +1,19 @@
+<?php 
+
+if (isset($this->success))
+    echo '<div class="alert alert-success">' 
+        . $this->success[0]
+        . '<button type="button" class="close" data-dismiss="alert">x</button>'
+        . '</div>';
+
+if (isset($this->error))
+    echo '<div class="alert alert-danger">' 
+        . $this->error[0]
+        . '<button type="button" class="close" data-dismiss="alert">x</button>'
+        . '</div>';
+
+if (isset($this->info))
+    echo '<div class="alert alert-info">' 
+        . $this->info[0]
+        . '<button type="button" class="close" data-dismiss="alert">x</button>'
+        . '</div>';
